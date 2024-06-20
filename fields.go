@@ -15,6 +15,32 @@ type Field struct {
 	Tiles [][]Tile
 }
 
+// Display is a function that takes a Field struct, and displays the current
+// state of the board based on the individual Tiles.
+func (f *Field) Display() {
+	tiles := f.Tiles
+
+	for i := range tiles {
+		for j := range tiles[i] {
+			currentTile := tiles[i][j]
+
+			if currentTile.IsClose {
+				fmt.Print(" ⬛")
+				continue
+			}
+
+			if currentTile.IsMine {
+				fmt.Print(" 󰷚 ")
+				continue
+			}
+
+			// TODO: logic for neighbor mines
+
+			fmt.Print(" ⬜") // empty
+		}
+		fmt.Println()
+	}
+}
 
 // Initialize takes the x * y dimensions of a field, followed by its number of
 // mines. Mines are pseudo-randomly distributed onto the field after the
