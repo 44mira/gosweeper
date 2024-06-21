@@ -88,6 +88,11 @@ func (f *Field) Dig(x, y int) {
 	if f.AdjMatrix[x][y] == 0 {
 		for i := -1; i <= 1; i++ {
 			for j := -1; j <= 1; j++ {
+				// skip recursion on current
+				if i == 0 && j == 0 {
+					continue
+				}
+
 				f.Dig(x+i, y+j)
 			}
 		}
