@@ -18,7 +18,7 @@ Play minesweeper straight from your command line!
     - [x] Use Nerdfont Icons
     - [x] Color tiles
     - [x] Use a CLI Framework (TCell)
-        - [x] Roughly center the board on screen
+        - [ ] Roughly center the board on screen
         - [ ] Recenter on resize
 - [x] Number tiles based on neighbor mines
 - [x] Flagging
