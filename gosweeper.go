@@ -73,6 +73,9 @@ func main() {
 	}
 }
 
+// Digs a tile on (x, y) given that it is closed and not flagged
+// Recursively digs surrounding tiles whenever the current tile has 0 neighbor
+// mines
 func (f *Field) Dig(x, y int) {
 	// Check bounds
 	if x >= len(f.Tiles) || x < 0 || y >= len(f.Tiles[0]) || y < 0 || !f.Tiles[x][y].IsClose {
@@ -107,6 +110,6 @@ func (f *Field) Flag(x, y int) {
 
 	// Can't flag opened
 	if f.Tiles[x][y].IsClose {
-		f.Tiles[x][y].IsFlagged = !f.Tiles[x/2][y].IsFlagged
+		f.Tiles[x][y].IsFlagged = !f.Tiles[x][y].IsFlagged
 	}
 }
