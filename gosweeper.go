@@ -87,7 +87,7 @@ func (f *Field) Dig(x, y int) {
 	// Recursively expand the dig
 	if f.AdjMatrix[x][y] == 0 {
 		for i := -1; i <= 1; i++ {
-			for j := -1; j <= 1; j++ {
+			for j := -1; j <= 1; j++ { // nested loop to dig surrounding
 				// skip recursion on current
 				if i == 0 && j == 0 {
 					continue
