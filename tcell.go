@@ -9,7 +9,7 @@ const ZERO = 48
 func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors uint) {
 	switch {
 	case tile.IsFlagged:
-		s.SetContent(x, y, '', nil, style.Foreground(tcell.ColorDarkMagenta))
+		s.SetContent(x, y, '', nil, style.Foreground(tcell.ColorIndianRed))
 	case tile.IsClose:
 		s.SetContent(x, y, '󰞍', nil, style.Foreground(tcell.ColorDarkSeaGreen))
 	case tile.IsMine:
