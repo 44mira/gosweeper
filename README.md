@@ -32,10 +32,15 @@ Play minesweeper straight from your command line!
         - [ ] Stopwatch
         - [ ] Time trial
 - [ ] Controls
-    - [ ] Arrow keys
-    - [ ] HJKL
-    - [ ] Flag (space)
-    - [ ] Dig (enter)
+    - [x] Mouse controls
+        - [x] Dig (left click)
+            - [ ] Expanding dig
+        - [x] Flag (right click)
+    - [ ] Keyboard
+        - [ ] Arrow keys
+        - [ ] HJKL
+        - [ ] Flag (space)
+        - [ ] Dig (enter)
 - [ ] Timer
     - [ ] Stopwatch
     - [ ] Time trial
@@ -46,7 +51,6 @@ Play minesweeper straight from your command line!
 ## ✴️ Optional features
 
 - [ ] Better generation algo (don't know yet)
-- [ ] Mouse controls (Tcell)
 
 ## ✴️ Build instructions
 
