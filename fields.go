@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math/rand/v2"
 )
@@ -50,7 +51,16 @@ func (f *Field) Display() {
 // Initialize takes the x * y dimensions of a field, followed by its number of
 // mines. Mines are pseudo-randomly distributed onto the field after the
 // initialization.
-func Initialize(x, y, mines int) Field {
+func Initialize(x, y, mines int) (Field, error) {
+
+	if x*y <= 0 {
+		return Field{}, errors.New("Invalid field dimensions.")
+	}
+
+	if mines > x*y {
+		return Field{}, errors.New("Invalid mine count.")
+	}
+
 	mineCount := mines
 
 	// Create matrix
@@ -76,7 +86,7 @@ func Initialize(x, y, mines int) Field {
 		mines--
 	}
 
-	return Field{tiles, uint(mineCount)}
+	return Field{tiles, uint(mineCount)}, nil
 }
 
 func numberColor(n uint) string {

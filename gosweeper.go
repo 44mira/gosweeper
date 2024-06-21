@@ -1,5 +1,7 @@
 package main
 
+import "log"
+
 const (
 	Reset         = "\033[0m"
 	Black         = "\033[30m"
@@ -22,6 +24,10 @@ const (
 
 func main() {
 	game := Initialize(10, 10, 25)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	game.Display()
 }
