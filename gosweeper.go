@@ -1,6 +1,9 @@
 package main
 
-import "log"
+import (
+	"flag"
+	"log"
+)
 
 const (
 	Reset         = "\033[0m"
@@ -23,7 +26,12 @@ const (
 )
 
 func main() {
-	game := Initialize(10, 10, 25)
+	mines := flag.Int("mine", 10, "Number of mines")
+	y := flag.Int("y", 5, "Height of the field")
+	x := flag.Int("x", 5, "Width of the field")
+	flag.Parse()
+
+	game, err := Initialize(*y, *x, *mines)
 
 	if err != nil {
 		log.Fatal(err)
