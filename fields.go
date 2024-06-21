@@ -26,12 +26,12 @@ type Field struct {
 func (f *Field) Display(s tcell.Screen) {
 	tileStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 
-	tiles := f.Tiles
+	tiles, adjMatrix := f.Tiles, f.AdjMatrix
 
 	for i := range tiles {
 		for j := range tiles[i] {
 			x, y := i*2, j
-			DrawTile(s, x, y, tileStyle, tiles[i][j], f.AdjMatrix[i][j], [2]int{len(tiles), len(tiles[i])})
+			DrawTile(s, x, y, tileStyle, tiles[i][j], adjMatrix[i][j], [2]int{len(tiles), len(tiles[i])})
 		}
 	}
 }
