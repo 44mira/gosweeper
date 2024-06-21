@@ -17,13 +17,13 @@ Play minesweeper straight from your command line!
     - [x] Use Nerdfont Icons
     - [x] Color tiles
 - [x] Number tiles based on neighbor mines
-- [ ] Flagging
+- [x] Flagging
 - [ ] Command line arguments
-    - [ ] Board dimensions
+    - [x] Board dimensions
     - [ ] Theme
         - [ ] Colors
         - [ ] Icons
-    - [ ] Mines
+    - [x] Mines
     - [ ] Timer
         - [ ] Stopwatch
         - [ ] Time trial
