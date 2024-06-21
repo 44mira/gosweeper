@@ -15,8 +15,10 @@ type Tile struct {
 
 // A Field is represented as a 2d slice
 type Field struct {
-	Tiles      [][]Tile
-	AdjMatrix  [][]uint
+	Tiles     [][]Tile
+	AdjMatrix [][]uint
+
+	// game state
 	TotalMines uint
 	LiveMines  uint
 }
