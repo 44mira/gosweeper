@@ -65,9 +65,9 @@ func main() {
 
 			switch ev.Buttons() {
 			case tcell.Button1: // Primary click
-				game.Dig(x, y)
+				game.Dig(x/2, y)
 			case tcell.Button2: // Secondary click
-				game.Flag(x, y)
+				game.Flag(x/2, y)
 			}
 		}
 	}
@@ -75,24 +75,33 @@ func main() {
 
 func (f *Field) Dig(x, y int) {
 	// Check bounds
-	if x >= len(f.Tiles)*2 && x < 0 && y >= len(f.Tiles[0]) && y < 0 {
+	if x >= len(f.Tiles) || x < 0 || y >= len(f.Tiles[0]) || y < 0 || !f.Tiles[x][y].IsClose {
 		return
 	}
 
 	// Can't open flagged
-	if !f.Tiles[x/2][y].IsFlagged {
-		f.Tiles[x/2][y].IsClose = false
+	if !f.Tiles[x][y].IsFlagged {
+		f.Tiles[x][y].IsClose = false
+	}
+
+	// Recursively expand the dig
+	if f.AdjMatrix[x][y] == 0 {
+		for i := -1; i <= 1; i++ {
+			for j := -1; j <= 1; j++ {
+				f.Dig(x+i, y+j)
+			}
+		}
 	}
 }
 
 func (f *Field) Flag(x, y int) {
 	// Check bounds
-	if x >= len(f.Tiles)*2 && x < 0 && y >= len(f.Tiles[0]) && y < 0 {
+	if x >= len(f.Tiles) || x < 0 || y >= len(f.Tiles[0]) || y < 0 {
 		return
 	}
 
 	// Can't flag opened
-	if f.Tiles[x/2][y].IsClose {
-		f.Tiles[x/2][y].IsFlagged = !f.Tiles[x/2][y].IsFlagged
+	if f.Tiles[x][y].IsClose {
+		f.Tiles[x][y].IsFlagged = !f.Tiles[x/2][y].IsFlagged
 	}
 }
