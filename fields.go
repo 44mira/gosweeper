@@ -2,8 +2,9 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"math/rand/v2"
+
+	"github.com/gdamore/tcell/v2"
 )
 
 type Tile struct {
@@ -21,37 +22,17 @@ type Field struct {
 
 // Display is a function that takes a Field struct, and displays the current
 // state of the board based on the individual Tiles.
-func (f *Field) Display() {
+func (f *Field) Display(s tcell.Screen) {
+	tileStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
+
 	tiles := f.Tiles
 	adjMatrix := f.GetAdjacencyMatrix().Cells
 
 	for i := range tiles {
 		for j := range tiles[i] {
-			currentTile := tiles[i][j]
-
-			if currentTile.IsClose {
-				fmt.Print(" ⬛")
-				continue
-			}
-
-			if currentTile.IsFlagged {
-				fmt.Print(BrightMagenta + " " + Reset)
-				continue
-			}
-
-			if currentTile.IsMine {
-				fmt.Print(BrightCyan + " 󰷚 " + Reset)
-				continue
-			}
-
-			if adjMatrix[i][j] == 0 {
-				fmt.Print(" 󱁐 ") // empty
-				continue
-			}
-
-			fmt.Printf("  %v%v"+Reset, numberColor(adjMatrix[i][j]), adjMatrix[i][j])
+			x, y := i*2, j
+			DrawTile(s, x, y, tileStyle, tiles[i][j], adjMatrix[i][j], [2]int{len(tiles), len(tiles[i])})
 		}
-		fmt.Println()
 	}
 }
 
@@ -94,29 +75,4 @@ func Initialize(x, y, mines int) (Field, error) {
 	}
 
 	return Field{tiles, uint(mineCount), uint(mineCount)}, nil
-}
-
-func numberColor(n uint) string {
-	switch n {
-	case 0:
-		return BrightCyan
-	case 1:
-		return BrightBlue
-	case 2:
-		return Green
-	case 3:
-		return BrightRed
-	case 4:
-		return Blue
-	case 5:
-		return Red
-	case 6:
-		return Cyan
-	case 7:
-		return Magenta
-	case 8:
-		return Gray
-	}
-
-	return "ERROR"
 }
