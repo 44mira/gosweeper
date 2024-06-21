@@ -66,10 +66,14 @@ func main() {
 			switch ev.Buttons() {
 			case tcell.Button1: // Primary click
 				if x < len(game.Tiles)*2 && x >= 0 && y < len(game.Tiles[0]) && y >= 0 {
-					game.Tiles[x/2][y].IsClose = false
+					if !game.Tiles[x/2][y].IsFlagged {
+						game.Tiles[x/2][y].IsClose = false
+					}
 				}
 			case tcell.Button2: // Secondary click
-				game.Tiles[x/2][y].IsFlagged = !game.Tiles[x/2][y].IsFlagged
+				if x < len(game.Tiles)*2 && x >= 0 && y < len(game.Tiles[0]) && y >= 0 {
+					game.Tiles[x/2][y].IsFlagged = game.Tiles[x/2][y].IsClose && !game.Tiles[x/2][y].IsFlagged
+				}
 			}
 		}
 	}
