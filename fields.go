@@ -33,7 +33,7 @@ func (f *Field) Display(s tcell.Screen) {
 	for i := range tiles {
 		for j := range tiles[i] {
 			x, y := i*2, j
-			DrawTile(s, x, y, tileStyle, tiles[i][j], adjMatrix[i][j], [2]int{len(tiles), len(tiles[i])})
+			DrawTile(s, x, y, tileStyle, tiles[i][j], adjMatrix[i][j])
 		}
 	}
 }
@@ -79,7 +79,6 @@ func Initialize(x, y, mines int) (Field, error) {
 
 		mines--
 	}
-
 	field := Field{tiles, [][]uint{}, uint(mineCount), uint(mineCount)}
 	field.AdjMatrix = field.GetAdjacencyMatrix().Cells
 

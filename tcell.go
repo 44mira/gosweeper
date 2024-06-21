@@ -6,26 +6,19 @@ import (
 
 const ZERO = 48
 
-func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors uint, dimensions [2]int) {
-
-	xmax, ymax := s.Size()
-
-	x += xmax/2 - dimensions[0]/2*3 - 1 // offset by width and last space
-	y += ymax/2 - dimensions[1]/2
-
+func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors uint) {
 	switch {
-	case tile.IsClose:
-		s.SetContent(x, y, ' ', []rune{'󰞍'}, style.Foreground(tcell.ColorDarkSeaGreen))
 	case tile.IsFlagged:
-		s.SetContent(x, y, ' ', []rune{''}, style.Foreground(tcell.ColorDarkMagenta))
+		s.SetContent(x, y, '', nil, style.Foreground(tcell.ColorDarkMagenta))
+	case tile.IsClose:
+		s.SetContent(x, y, '󰞍', nil, style.Foreground(tcell.ColorDarkSeaGreen))
 	case tile.IsMine:
-		s.SetContent(x, y, ' ', []rune{'󰷚'}, style.Foreground(tcell.ColorSteelBlue))
+		s.SetContent(x, y, '󰷚', nil, style.Foreground(tcell.ColorSteelBlue))
 	case neighbors == 0:
-		s.SetContent(x, y, ' ', []rune{'∿'}, style.Foreground(tcell.ColorLightSkyBlue))
+		s.SetContent(x, y, '∿', nil, style.Foreground(tcell.ColorLightSkyBlue))
 	default:
-		s.SetContent(x, y, ' ', []rune{rune(neighbors) + ZERO}, style.Foreground(numberColor(neighbors)))
+		s.SetContent(x, y, rune(neighbors)+ZERO, nil, style.Foreground(numberColor(neighbors)))
 	}
-	s.SetContent(x+1, y, ' ', nil, style.Foreground(numberColor(neighbors)))
 
 }
 
