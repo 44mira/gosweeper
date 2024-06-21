@@ -14,8 +14,9 @@ type Tile struct {
 
 // A Field is represented as a 2d slice
 type Field struct {
-	Tiles [][]Tile
-	mines uint
+	Tiles      [][]Tile
+	TotalMines uint
+	LiveMines  uint
 }
 
 // Display is a function that takes a Field struct, and displays the current
@@ -92,7 +93,7 @@ func Initialize(x, y, mines int) (Field, error) {
 		mines--
 	}
 
-	return Field{tiles, uint(mineCount)}, nil
+	return Field{tiles, uint(mineCount), uint(mineCount)}, nil
 }
 
 func numberColor(n uint) string {
