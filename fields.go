@@ -57,6 +57,10 @@ func Initialize(x, y, mines int) (Field, error) {
 	tiles := make([][]Tile, x) // Create columns
 	for i := range tiles {
 		tiles[i] = make([]Tile, y) // Create rows
+
+		for j := range tiles[i] {
+			tiles[i][j].IsClose = true
+		}
 	}
 
 	// Insert mines

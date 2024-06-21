@@ -15,13 +15,13 @@ func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors 
 
 	switch {
 	case tile.IsClose:
-		s.SetContent(x, y, ' ', []rune{' '}, style.Foreground(tcell.ColorPaleGreen))
+		s.SetContent(x, y, ' ', []rune{'󰞍'}, style.Foreground(tcell.ColorDarkSeaGreen))
 	case tile.IsFlagged:
 		s.SetContent(x, y, ' ', []rune{''}, style.Foreground(tcell.ColorDarkMagenta))
 	case tile.IsMine:
 		s.SetContent(x, y, ' ', []rune{'󰷚'}, style.Foreground(tcell.ColorSteelBlue))
 	case neighbors == 0:
-		s.SetContent(x, y, ' ', []rune{'󱁐'}, style.Foreground(tcell.ColorLightSkyBlue))
+		s.SetContent(x, y, ' ', []rune{'∿'}, style.Foreground(tcell.ColorLightSkyBlue))
 	default:
 		s.SetContent(x, y, ' ', []rune{rune(neighbors) + ZERO}, style.Foreground(numberColor(neighbors)))
 	}
