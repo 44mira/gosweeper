@@ -13,12 +13,14 @@ type Tile struct {
 // A Field is represented as a 2d slice
 type Field struct {
 	Tiles [][]Tile
+	mines uint
 }
 
 // Display is a function that takes a Field struct, and displays the current
 // state of the board based on the individual Tiles.
 func (f *Field) Display() {
 	tiles := f.Tiles
+	adjMatrix := f.GetAdjacencyMatrix().Cells
 
 	for i := range tiles {
 		for j := range tiles[i] {
@@ -30,13 +32,16 @@ func (f *Field) Display() {
 			}
 
 			if currentTile.IsMine {
-				fmt.Print(" 󰷚 ")
+				fmt.Print(BrightCyan + " 󰷚 " + Reset)
 				continue
 			}
 
-			// TODO: logic for neighbor mines
+			if adjMatrix[i][j] == 0 {
+				fmt.Print(" 󱁐 ") // empty
+				continue
+			}
 
-			fmt.Print(" ⬜") // empty
+			fmt.Printf("  %v%v"+Reset, numberColor(adjMatrix[i][j]), adjMatrix[i][j])
 		}
 		fmt.Println()
 	}
@@ -46,6 +51,7 @@ func (f *Field) Display() {
 // mines. Mines are pseudo-randomly distributed onto the field after the
 // initialization.
 func Initialize(x, y, mines int) Field {
+	mineCount := mines
 
 	// Create matrix
 	tiles := make([][]Tile, x) // Create columns
@@ -54,7 +60,7 @@ func Initialize(x, y, mines int) Field {
 	}
 
 	// Insert mines
-	insertedMines := make(map[int]bool, x*y) // hashmap for inserted mines
+	insertedMines := make(map[int]bool) // hashmap for inserted mines
 
 	for mines > 0 {
 		mine := rand.IntN(x * y)
@@ -62,11 +68,38 @@ func Initialize(x, y, mines int) Field {
 		if insertedMines[mine] {
 			continue
 		}
+		insertedMines[mine] = true // put value in hashmap
 
 		// convert the int into a coordinate
-		tiles[mine/x][mine%x].IsMine = true
+		tiles[mine/x][mine%y].IsMine = true
+
 		mines--
 	}
 
-	return Field{tiles}
+	return Field{tiles, uint(mineCount)}
+}
+
+func numberColor(n uint) string {
+	switch n {
+	case 0:
+		return BrightCyan
+	case 1:
+		return BrightBlue
+	case 2:
+		return Green
+	case 3:
+		return BrightRed
+	case 4:
+		return Blue
+	case 5:
+		return Red
+	case 6:
+		return Cyan
+	case 7:
+		return Magenta
+	case 8:
+		return Gray
+	}
+
+	return "ERROR"
 }
