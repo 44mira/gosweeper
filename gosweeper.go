@@ -74,15 +74,25 @@ func main() {
 }
 
 func (f *Field) Dig(x, y int) {
-	if x < len(f.Tiles)*2 && x >= 0 && y < len(f.Tiles[0]) && y >= 0 {
-		if !f.Tiles[x/2][y].IsFlagged {
-			f.Tiles[x/2][y].IsClose = false
-		}
+	// Check bounds
+	if x >= len(f.Tiles)*2 && x < 0 && y >= len(f.Tiles[0]) && y < 0 {
+		return
+	}
+
+	// Can't open flagged
+	if !f.Tiles[x/2][y].IsFlagged {
+		f.Tiles[x/2][y].IsClose = false
 	}
 }
 
 func (f *Field) Flag(x, y int) {
-	if x < len(f.Tiles)*2 && x >= 0 && y < len(f.Tiles[0]) && y >= 0 {
-		f.Tiles[x/2][y].IsFlagged = f.Tiles[x/2][y].IsClose && !f.Tiles[x/2][y].IsFlagged
+	// Check bounds
+	if x >= len(f.Tiles)*2 && x < 0 && y >= len(f.Tiles[0]) && y < 0 {
+		return
+	}
+
+	// Can't flag opened
+	if f.Tiles[x/2][y].IsClose {
+		f.Tiles[x/2][y].IsFlagged = !f.Tiles[x/2][y].IsFlagged
 	}
 }
