@@ -34,7 +34,7 @@ Play minesweeper straight from your command line!
 - [ ] Controls
     - [x] Mouse controls
         - [x] Dig (left click)
-            - [ ] Expanding dig
+            - [x] Expanding dig
         - [x] Flag (right click)
     - [ ] Keyboard
         - [ ] Arrow keys
