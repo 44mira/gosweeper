@@ -35,7 +35,7 @@ func (f *Field) Display() {
 			}
 
 			if currentTile.IsFlagged {
-				fmt.Print(BrightMagenta + " ")
+				fmt.Print(BrightMagenta + " " + Reset)
 				continue
 			}
 
