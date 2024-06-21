@@ -7,8 +7,9 @@ import (
 )
 
 type Tile struct {
-	IsMine  bool
-	IsClose bool
+	IsMine    bool
+	IsClose   bool
+	IsFlagged bool
 }
 
 // A Field is represented as a 2d slice
@@ -29,6 +30,11 @@ func (f *Field) Display() {
 
 			if currentTile.IsClose {
 				fmt.Print(" ⬛")
+				continue
+			}
+
+			if currentTile.IsFlagged {
+				fmt.Print(BrightMagenta + " ")
 				continue
 			}
 
