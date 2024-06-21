@@ -1,15 +1,14 @@
-
-# GOSWEEPER
+![image](https://github.com/44mira/gosweeper/assets/116419708/cddb945b-6757-4a4c-91c0-94a877775e4e)
 
 Play minesweeper straight from your command line!
 
-## Dependencies
+## ✴️ Dependencies
 
 - A [*Nerd Font*](https://www.nerdfonts.com/)
 - Not a strict dependency, but only tested on the [`kitty`](https://sw.kovidgoyal.net/kitty/) terminal
     - Might have formatting issues on other terminal emulators
 
-## TODO
+## ✴️ TODO
 
 - [x] Generate field
     - [x] Handle invalid field parameters
@@ -40,7 +39,7 @@ Play minesweeper straight from your command line!
     - [ ] based on time
     - [ ] based on mine count
 
-## Optional features
+## ✴️ Optional features
 
 - [ ] Better generation algo (don't know yet)
 - [ ] Mouse controls (Tcell)
