@@ -13,7 +13,7 @@ func main() {
 	flag.Parse()
 
 	// Initialize Field
-	game, err := Initialize(*y, *x, *mines)
+	game, err := Initialize(*x, *y, *mines)
 	if err != nil {
 		log.Fatalf("%+v", err)
 	}
