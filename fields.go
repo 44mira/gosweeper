@@ -63,19 +63,16 @@ func Initialize(x, y, mines int) (Field, error) {
 		}
 	}
 
-	// Insert mines
-	insertedMines := make(map[int]bool) // hashmap for inserted mines
-
 	for mines > 0 {
-		mine := rand.IntN(x * y)
+		mineX := rand.IntN(x)
+		mineY := rand.IntN(y)
 
-		if insertedMines[mine] {
+		if tiles[mineX][mineY].IsMine {
 			continue
 		}
-		insertedMines[mine] = true // put value in hashmap
 
 		// convert the int into a coordinate
-		tiles[mine/x][mine%y].IsMine = true
+		tiles[mineX][mineY].IsMine = true
 
 		mines--
 	}
