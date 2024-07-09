@@ -87,6 +87,7 @@ func (m *Matrix) HShift(original [][]uint) {
 // HShift is a function that increments a matrix inplace on both diagonals.
 func (m *Matrix) DShift(original [][]uint) {
 	cells := m.Cells
+	colLength := len(cells) - 1
 
 	for i := range cells {
 		for j := range cells[i] {
@@ -103,7 +104,7 @@ func (m *Matrix) DShift(original [][]uint) {
 			}
 
 			// Increment bottom-left
-			if i < rowLength && j > 0 {
+			if i < colLength && j > 0 {
 				cells[i+1][j-1]++
 			}
 
@@ -112,7 +113,7 @@ func (m *Matrix) DShift(original [][]uint) {
 				cells[i-1][j+1]++
 			}
 
-			if i < rowLength && j < rowLength {
+			if i < colLength && j < rowLength {
 				cells[i+1][j+1]++
 			}
 		}
