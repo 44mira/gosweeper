@@ -18,39 +18,49 @@ Play minesweeper straight from your command line!
     - [x] Use Nerdfont Icons
     - [x] Color tiles
     - [x] Use a CLI Framework (TCell)
-        - [ ] Roughly center the board on screen
-        - [ ] Recenter on resize
 - [x] Number tiles based on neighbor mines
 - [x] Flagging
-- [ ] Command line arguments
+- [x] Command line arguments
     - [x] Board dimensions
-    - [ ] Theme
-        - [ ] Colors
-        - [ ] Icons
     - [x] Mines
-    - [ ] Timer
-        - [ ] Stopwatch
-        - [ ] Time trial
-- [ ] Controls
+- [x] Controls
     - [x] Mouse controls
         - [x] Dig (left click)
             - [x] Expanding dig
         - [x] Flag (right click)
-    - [ ] Keyboard
-        - [ ] Arrow keys
-        - [ ] HJKL
-        - [ ] Flag (space)
-        - [ ] Dig (enter)
-- [ ] Timer
-    - [ ] Stopwatch
-    - [ ] Time trial
-- [ ] Score
-    - [ ] based on time
-    - [ ] based on mine count
+- [ ] Game ends
+    - [ ] Win
+    - [ ] Loss
+- [ ] Self-solve
+    - [ ] Create a separate game loop for self-solving runs
+    - [ ] Add a flag for self-solve
+    - [ ] Create the algorithm
+        - [ ] Calculate probabilities for every possible closed tile
+        - [ ] Queue all tiles with lowest probability
+        - [ ] Dig every tile in the queue
+        - [ ] Re-calculate the probabilities
+    - [ ] Create the self-solve animation
+        - [ ] 0.5s per dig
+        - [ ] Add a flag argument for the solve speed
+    - [ ] Restart on game end
 
 ## ✴️ Optional features
 
-- [ ] Better generation algo (don't know yet)
+- [ ] Better generation algo (deterministic minesweeper)
+- [ ] Centering
+    - [ ] Create a flag for centering the board
+    - [ ] Roughly center the board on screen
+    - [ ] Recenter on resize
+- [ ] Theme
+    - [ ] Colors config file
+- [ ] Timer
+    - [ ] Stopwatch
+    - [ ] Time trial
+- [ ] Keyboard
+    - [ ] Arrow keys
+    - [ ] HJKL
+    - [ ] Flag (space)
+    - [ ] Dig (enter)
 
 ## ✴️ Build instructions
 
@@ -83,3 +93,4 @@ gosweeper.exe
 | mine   | Number of mines     |
 | x      | Width of the field  |
 | y      | Height of the field |
+| s      | Self-solve speed    |
