@@ -12,8 +12,14 @@ func main() {
 	x := flag.Int("x", 5, "Width of the field")
 	flag.Parse()
 
+	GameLoop(*x, *y, *mines)
+}
+
+// [[ Game loop ]] {{{
+func GameLoop(x, y, mines int) {
+	// [[ Initial Boilerplate ]] {{{1
 	// Initialize Field
-	game, err := Initialize(*x, *y, *mines)
+	game, err := Initialize(x, y, mines)
 	if err != nil {
 		log.Fatalf("%+v", err)
 	}
@@ -42,9 +48,9 @@ func main() {
 	defer quit()
 
 	game.Display(s)
+	// }}}1
 
 	for {
-
 		s.Show()
 		game.Display(s)
 		ev := s.PollEvent()
@@ -73,6 +79,9 @@ func main() {
 	}
 }
 
+// }}}
+
+// [[ Dig and Flag ]] {{{
 // Digs a tile on (x, y) given that it is closed and not flagged
 // Recursively digs surrounding tiles whenever the current tile has 0 neighbor
 // mines
