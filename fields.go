@@ -19,13 +19,14 @@ type Field struct {
 	AdjMatrix [][]uint
 
 	// game state
-	TotalMines uint
-	LiveMines  uint
+	TotalTiles uint
+	OpenTiles  uint
+	MineCount  uint
 }
 
 // Display is a function that takes a Field struct, and displays the current
 // state of the board based on the individual Tiles.
-func (f *Field) Display(s tcell.Screen) {
+func (f *Field) Display(s tcell.Screen, won bool) {
 	tileStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 
 	tiles, adjMatrix := f.Tiles, f.AdjMatrix
@@ -33,7 +34,7 @@ func (f *Field) Display(s tcell.Screen) {
 	for i := range tiles {
 		for j := range tiles[i] {
 			x, y := i*2, j
-			DrawTile(s, x, y, tileStyle, tiles[i][j], adjMatrix[i][j])
+			DrawTile(s, x, y, tileStyle, tiles[i][j], adjMatrix[i][j], won)
 		}
 	}
 }
@@ -76,8 +77,17 @@ func Initialize(x, y, mines int) (Field, error) {
 
 		mines--
 	}
-	field := Field{tiles, [][]uint{}, uint(mineCount), uint(mineCount)}
+	field := Field{tiles, [][]uint{}, uint(x * y), uint(0), uint(mineCount)}
 	field.AdjMatrix = field.GetAdjacencyMatrix().Cells
 
 	return field, nil
+}
+
+func (f *Field) Lose() {
+	// Reveal the board
+	for i := range f.Tiles {
+		for j := range f.Tiles[i] {
+			f.Tiles[i][j].IsClose = false
+		}
+	}
 }

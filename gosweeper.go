@@ -15,9 +15,9 @@ func main() {
 	GameLoop(*x, *y, *mines)
 }
 
-// [[ Game loop ]] {{{
+// [[ Game loop ]] {{{1
 func GameLoop(x, y, mines int) {
-	// [[ Initial Boilerplate ]] {{{1
+	// [[ Initial Boilerplate ]] {{{2
 	// Initialize Field
 	game, err := Initialize(x, y, mines)
 	if err != nil {
@@ -46,13 +46,12 @@ func GameLoop(x, y, mines int) {
 		}
 	}
 	defer quit()
+	// }}}2
 
-	game.Display(s)
-	// }}}1
-
+	won := false // flag for win (colors the tiles gold)
 	for {
+		game.Display(s, won)
 		s.Show()
-		game.Display(s)
 		ev := s.PollEvent()
 
 		switch ev := ev.(type) {
@@ -73,6 +72,9 @@ func GameLoop(x, y, mines int) {
 			case tcell.Button1: // Primary click
 				if game.Dig(x/2, y) { // if dug a mine
 					game.Lose()
+				} else if game.OpenTiles+game.MineCount == game.TotalTiles {
+					won = true
+					s.Show()
 				}
 			case tcell.Button2: // Secondary click
 				game.Flag(x/2, y)
@@ -81,7 +83,7 @@ func GameLoop(x, y, mines int) {
 	}
 }
 
-// }}}
+// }}}1
 
 // [[ Dig and Flag ]] {{{
 // Digs a tile on (x, y) given that it is closed and not flagged
@@ -115,6 +117,7 @@ func (f *Field) Dig(x, y int) bool {
 		}
 	}
 
+	f.OpenTiles++
 	return f.Tiles[x][y].IsMine
 }
 
@@ -131,12 +134,3 @@ func (f *Field) Flag(x, y int) {
 }
 
 // }}}
-
-func (f *Field) Lose() {
-	// Reveal the board
-	for i := range f.Tiles {
-		for j := range f.Tiles[i] {
-			f.Tiles[i][j].IsClose = false
-		}
-	}
-}

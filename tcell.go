@@ -6,7 +6,7 @@ import (
 
 const ZERO = 48
 
-func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors uint) {
+func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors uint, won bool) {
 	switch {
 	case tile.IsFlagged:
 		s.SetContent(x, y, '󰈿', nil, style.Foreground(tcell.ColorIndianRed))
@@ -17,7 +17,11 @@ func DrawTile(s tcell.Screen, x, y int, style tcell.Style, tile Tile, neighbors 
 	case neighbors == 0:
 		s.SetContent(x, y, '∿', nil, style.Foreground(tcell.ColorLightSkyBlue))
 	default:
-		s.SetContent(x, y, rune(neighbors)+ZERO, nil, style.Foreground(numberColor(neighbors)))
+		if won {
+			s.SetContent(x, y, rune(neighbors)+ZERO, nil, style.Foreground(tcell.ColorGoldenrod))
+		} else {
+			s.SetContent(x, y, rune(neighbors)+ZERO, nil, style.Foreground(numberColor(neighbors)))
+		}
 	}
 
 }
