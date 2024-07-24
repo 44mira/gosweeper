@@ -28,9 +28,9 @@ Play minesweeper straight from your command line!
         - [x] Dig (left click)
             - [x] Expanding dig
         - [x] Flag (right click)
-- [ ] Game ends
-    - [ ] Win
-    - [ ] Loss
+- [x] Game ends
+    - [x] Win
+    - [x] Loss
 - [ ] Self-solve
     - [ ] Create a separate game loop for self-solving runs
     - [ ] Add a flag for self-solve
