@@ -71,7 +71,9 @@ func GameLoop(x, y, mines int) {
 
 			switch ev.Buttons() {
 			case tcell.Button1: // Primary click
-				game.Dig(x/2, y)
+				if game.Dig(x/2, y) { // if dug a mine
+					game.Lose()
+				}
 			case tcell.Button2: // Secondary click
 				game.Flag(x/2, y)
 			}
@@ -85,10 +87,12 @@ func GameLoop(x, y, mines int) {
 // Digs a tile on (x, y) given that it is closed and not flagged
 // Recursively digs surrounding tiles whenever the current tile has 0 neighbor
 // mines
-func (f *Field) Dig(x, y int) {
+//
+// Return if lose or not
+func (f *Field) Dig(x, y int) bool {
 	// Check bounds
 	if x >= len(f.Tiles) || x < 0 || y >= len(f.Tiles[0]) || y < 0 || !f.Tiles[x][y].IsClose {
-		return
+		return false
 	}
 
 	// Can't open flagged
@@ -105,10 +109,13 @@ func (f *Field) Dig(x, y int) {
 					continue
 				}
 
+				// Don't need to catch for loss since this only recurses on safe tiles
 				f.Dig(x+i, y+j)
 			}
 		}
 	}
+
+	return f.Tiles[x][y].IsMine
 }
 
 func (f *Field) Flag(x, y int) {
@@ -120,5 +127,16 @@ func (f *Field) Flag(x, y int) {
 	// Can't flag opened
 	if f.Tiles[x][y].IsClose {
 		f.Tiles[x][y].IsFlagged = !f.Tiles[x][y].IsFlagged
+	}
+}
+
+// }}}
+
+func (f *Field) Lose() {
+	// Reveal the board
+	for i := range f.Tiles {
+		for j := range f.Tiles[i] {
+			f.Tiles[i][j].IsClose = false
+		}
 	}
 }
