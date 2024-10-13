@@ -27,14 +27,71 @@ func (f *Field) GetAdjacencyMatrix() Matrix {
 	matrix := Matrix{cells}
 	original := deepCopy(matrix.Cells)
 
-	matrix.VShift(original)
-	matrix.HShift(original)
-	matrix.DShift(original)
+	matrix.AdjShift(original)
 
 	return matrix
 }
 
+// AdjShift is a function that does VShift, HShift, and DShift, all in one pass.
+func (m *Matrix) AdjShift(original [][]uint) {
+	cells := m.Cells
+	colLength := len(cells) - 1
+
+	for i := range cells {
+		for j := range cells[i] {
+			rowLength := len(cells[i]) - 1
+
+			// if the cell has no mine, early return
+			if original[i][j] < 1 {
+				continue
+			}
+
+			// Increment above
+			if i > 0 {
+				cells[i-1][j]++
+			}
+
+			// Increment below
+			if i < colLength {
+				cells[i+1][j]++
+			}
+
+			// Increment left
+			if j > 0 {
+				cells[i][j-1]++
+			}
+
+			// Increment right
+			if j < rowLength {
+				cells[i][j+1]++
+			}
+
+			// Increment top-left
+			if i > 0 && j > 0 {
+				cells[i-1][j-1]++
+			}
+
+			// Increment bottom-left
+			if i < colLength && j > 0 {
+				cells[i+1][j-1]++
+			}
+
+			// Increment top-right
+			if i > 0 && j < rowLength {
+				cells[i-1][j+1]++
+			}
+
+			if i < colLength && j < rowLength {
+				cells[i+1][j+1]++
+			}
+		}
+	}
+}
+
+// [[ Deprecated ]] {{{
+
 // VShift is a function that increments a matrix in place 1 step up and down.
+// ** deprecated (kept for historical reasons)
 func (m *Matrix) VShift(original [][]uint) {
 	cells := m.Cells
 
@@ -60,6 +117,7 @@ func (m *Matrix) VShift(original [][]uint) {
 }
 
 // HShift is a function that increments a matrix inplace 1 step left and right.
+// ** deprecated (kept for historical reasons)
 func (m *Matrix) HShift(original [][]uint) {
 	cells := m.Cells
 
@@ -84,7 +142,8 @@ func (m *Matrix) HShift(original [][]uint) {
 	}
 }
 
-// HShift is a function that increments a matrix inplace on both diagonals.
+// DShift is a function that increments a matrix inplace on both diagonals.
+// ** deprecated (kept for historical reasons)
 func (m *Matrix) DShift(original [][]uint) {
 	cells := m.Cells
 	colLength := len(cells) - 1
@@ -119,6 +178,8 @@ func (m *Matrix) DShift(original [][]uint) {
 		}
 	}
 }
+
+// }}}
 
 func deepCopy(matrix [][]uint) [][]uint {
 	x, y := len(matrix), len(matrix[0])
